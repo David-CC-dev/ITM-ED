@@ -1,21 +1,50 @@
-#include "./Tecnico.h"
+#include "./Carro.h"
 
-int main(){
+void Carro::Informacion(){
     
-    Carro goku;
-    Tecnico vegeta;
+    cout << "Kilometraje: " << kilometraje << endl;
+    cout << "Nivel de gasolina: " << nivelGasolina << " galones" << endl;
+    cout << "Estado: " << estado << endl;
     
-    Carro* ptr = &goku;
+}
+
+Carro::Carro(){
     
-    vegeta.Tanquear(ptr,20);
+    kilometraje = 0;
+    nivelGasolina = 0;
+    estado = '0';
     
-    goku.Informacion();
+}
+
+void Carro::Recorrer(float distancia){
     
-    //cout << "sobrante: " << sobrante << endl;
+    float distanciaReal = min(nivelGasolina*autonomia, distancia);
     
-    AutoServicio maquina;
+    kilometraje = kilometraje + distanciaReal;
+    nivelGasolina = nivelGasolina - (distanciaReal/autonomia);
     
-    maquina.ListarPrecios();
+    if(kilometraje >= 45){
+        estado = '1';
+    }
     
-    return 0;
+}
+
+float Carro::Tanquear(float gasolina){
+    
+    
+    float faltante = capacidad - nivelGasolina;
+    float sobrante = gasolina - faltante;
+    
+    if(sobrante >= 0){
+        
+        nivelGasolina = capacidad;
+        return sobrante;
+        
+    }else{
+        
+        nivelGasolina = nivelGasolina + gasolina; 
+        return 0;
+        
+    }
+    
 }
